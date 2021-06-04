@@ -35,16 +35,97 @@ ChatBot::~ChatBot()
     std::cout << "ChatBot Destructor" << std::endl;
 
     // deallocate heap memory
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if(_image != nullptr) // Attention: wxWidgets used NULL and not nullptr
     {
-        delete _image;
+        //delete _image;
         _image = NULL;
     }
 }
 
 //// STUDENT CODE
 ////
+//Copy constructor
+ChatBot::ChatBot(ChatBot &source) {
 
+    std::cout << "ChatBot Copy Constructor!\n";
+
+    if (source._image == nullptr){
+
+        this->_image = new wxBitmap(*source._image);
+
+    }
+    else
+    
+    {
+        
+      this->_image = nullptr;
+   
+    }
+    
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+
+}                  
+ChatBot &ChatBot::operator=(const ChatBot &source) {
+    
+    std::cout << "ChatBot Copy Assign Constructor!\n";
+    
+    if (source._image == nullptr){
+
+        this->_image = new wxBitmap(*source._image);
+
+    }
+    else
+    
+    {
+        
+      this->_image = nullptr;
+   
+    }
+    
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    
+    return *this;
+    
+}
+ChatBot::ChatBot(ChatBot &&source) {
+
+  	std::cout << "ChatBot Move Constructor!\n";
+  
+	this->_image = source._image;
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+  
+  	source._image = nullptr;
+  	source._chatLogic = nullptr;
+  	source._rootNode = nullptr;
+  
+  	this->_chatLogic->SetChatbotHandle(this);
+  
+}                //move assignment operator
+ChatBot &ChatBot::operator=(ChatBot &&source) {
+    
+    std::cout << "ChatBot Move Assignment Operator\n";
+
+    if (this == &source)
+    {
+        return *this;
+    }
+    
+    this->_image = source._image;
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+
+    source._image = nullptr;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+    
+    this->_chatLogic->SetChatbotHandle(this);
+
+    return *this;
+
+}
 ////
 //// EOF STUDENT CODE
 
