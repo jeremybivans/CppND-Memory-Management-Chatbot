@@ -17,9 +17,10 @@ ChatLogic::ChatLogic()
     //// STUDENT CODE
     ////
 
-    //creat instances of edge and node
+    //create instances of edge and node
     std::vector<std::unique_ptr<GraphNode>> _nodes;
     std::vector<std::unique_ptr<GraphEdge>> _edges;
+    
     // create instance of chatbot
     _chatBot = new ChatBot("../images/chatbot.png");
 
@@ -163,28 +164,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                               return node->GetID() == std::stoi(parentToken->second); });
                             auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](const std::unique_ptr<GraphNode>& node) { 
                               return node->GetID() == std::stoi(childToken->second); });
-                          /*std::vector<std::unique_ptr<GraphNode>>::iterator parentNode;
-                            std::vector<std::unique_ptr<GraphNode>>::iterator childNode;
-                            
-                            for (auto node = _nodes.begin(); node != _nodes.end(); ++node)
-                            {
-                                if ((*node)->GetID() == std::stoi(parentToken->second))
-                                {
-                                    parentNode = node;
-                                    break;
-                                }
-                                
-                            }
-                            
-                            for (auto node = _nodes.begin(); node != _nodes.end(); ++node)
-                            {
-                                if ((*node)->GetID() == std::stoi(childToken->second))
-                                {
-                                    childNode = node;
-                                    break;
-                                }
-                                
-                            }*/
+                          
                             // create new edge
                             std::unique_ptr<GraphEdge> edge = std::make_unique<GraphEdge>(id);
                             edge->SetChildNode((*childNode).get());
